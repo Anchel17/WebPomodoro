@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Arvo', serif;
+}
+
+body{
+    width: 100%;
+    background-color: #ba4949;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.container{
+    width: 40%;
+    padding-top: 1rem;
+}
+
+header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#titulo{
+    display: flex;
+    flex-direction: row;
+    gap: .5rem;
+    color: #ffff;
+}
+
+#header-buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+#toggle-dark-mode{
+    padding: .5rem 1.7rem;
+    border-radius: 16px;
+    color: #ffffff;
+}
+
+#github{
+    padding: .2rem 1.5rem;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.header-btn{
+    background-color: #c86d6d;
+    border: 1px solid #c86d6d;
+}
+
+.container-timer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background-color: #c15c5c;
+    margin-top: 2rem;
+}
+
+.timer-select-buttons{
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.timer-select-btn{
+    padding: .2rem 1.8rem;
+    font-size: 1rem;
+    color: #ffffff;
+    font-weight: bold;
+    background-color: #a44e4e;
+    border: 1px solid #a44e4e;
+}
+
+#timer{
+    font-size: 10vw;
+    color: #ffffff;
+    margin-top: 2rem;
+}
+
+#start-btn{
+    padding: 2rem 6rem;
+    margin: 3rem;
+    font-size: 1vw;
+    background-color: #ffffff;
+    color: #ba4949;
+    border: none;
+    border-radius: 16px;
+    box-shadow: #ddd 0 6px 0;
+}
+
+.container-tasks{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.task-description{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding-top: 1rem;
+    gap: .5rem;
+    color: #ffffff;
+    font-size: 1vw;
+}
+
+.container-task-list{
+    width: 100%;
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: #ffffff;
+    border-bottom: 2px solid #ffffff;
+}
+
+.container-task-list img{
+    background-color: #c66a6a;
+    padding: .5rem .5rem;
+    margin-bottom: .5rem;
+}
+
+#add-task-btn{
+    width: 100%;
+    margin-top: 2rem;
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    background-color: #ab4343;
+    border: 2px dashed #ffffff;
+    font-size: 1vw;
+    color: #ffffff;
+}

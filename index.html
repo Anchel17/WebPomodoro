@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Web Pomodoro</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div id="titulo">
+                <img src="./img/clock.svg" alt="Relogio">
+                <h1>Web Pomodoro</h1>
+            </div>
+
+            <div id="header-buttons">
+                <button id="toggle-dark-mode" class="header-btn">Lua</button>
+                <button id="github" class="header-btn">
+                    <img src="./img/github.svg" alt="Github">
+                </button>
+            </div>
+        </header>
+
+        <div class="container-timer">
+            <div class="timer-select-buttons">
+                <button id="pomodoro" class="timer-select-btn">Pomodoro</button>
+                <button id="short-break" class="timer-select-btn">Short Break</button>
+                <button id="long-break" class="timer-select-btn">Long Break</button>
+            </div>
+
+            <h1 id="timer">25:00</h1>
+
+            <button id="start-btn"><h1>START</h1></button>
+        </div>
+
+        <div class="container-tasks">
+            <div class="task-description">
+                <p id="task-number">#1</p>
+                <p id="task-title">Time to focus!</p>
+            </div>
+
+            <div class="container-task-list">
+                <h2>Tasks</h2>
+                <img src="./img/dots.svg" alt="options">
+            </div>
+
+            <button id="add-task-btn">
+                <img src="./img/add-task.svg" alt="Add task">
+                <p>Add Task</p>
+            </button>
+        </div>
+    </div>
+</body>
+</html>
