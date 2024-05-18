@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <title>Web Pomodoro</title>
 </head>
-<body>
+<body onload="getDefaultTimerValue()" id="select-body">
     <div class="container">
         <header>
             <div id="titulo">
@@ -15,23 +15,23 @@
             </div>
 
             <div id="header-buttons">
-                <button id="toggle-dark-mode" class="header-btn">Lua</button>
-                <button id="github" class="header-btn">
+                <button id="toggle-dark-mode" class="header-btn color-transition-time">Lua</button>
+                <button id="github" class="header-btn color-transition-time">
                     <img src="./img/github.svg" alt="Github">
                 </button>
             </div>
         </header>
 
-        <div class="container-timer">
+        <div id="container-timer" class="color-transition-time">
             <div class="timer-select-buttons">
-                <button id="pomodoro" class="timer-select-btn">Pomodoro</button>
-                <button id="short-break" class="timer-select-btn">Short Break</button>
-                <button id="long-break" class="timer-select-btn">Long Break</button>
+                <button id="pomodoro" class="timer-select-btn" onclick="getDefaultTimerValue()">Pomodoro</button>
+                <button id="short-break" class="timer-select-btn" onclick="getShortTimerValue()">Short Break</button>
+                <button id="long-break" class="timer-select-btn" onclick="getLongTimerValue()">Long Break</button>
             </div>
 
-            <h1 id="timer">25:00</h1>
+            <h1 id="timer"></h1>
 
-            <button id="start-btn"><h1>START</h1></button>
+            <button id="start-btn" class="text-color-transition-time"><h1>START</h1></button>
         </div>
 
         <div class="container-tasks">
@@ -42,14 +42,16 @@
 
             <div class="container-task-list">
                 <h2>Tasks</h2>
-                <img src="./img/dots.svg" alt="options">
+                <img id="task-list-options" class="color-transition-time" src="./img/dots.svg" alt="options">
             </div>
 
-            <button id="add-task-btn">
+            <button id="add-task-btn" class="color-transition-time">
                 <img src="./img/add-task.svg" alt="Add task">
                 <p>Add Task</p>
             </button>
         </div>
     </div>
+
+    <script src="./scripts.js"></script>
 </body>
 </html>
