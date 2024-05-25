@@ -9,77 +9,154 @@ var githubBtn = document.getElementById('github');
 var startBtn = document.getElementById('start-btn');
 var tasksOptionButton = document.getElementById('task-list-options');
 var addTaskButton = document.getElementById('add-task-btn');
+var timerInterval;
+var isTimerActive = false;
+var globalTimerMode;
 
 
-function getDefaultTimerValue(){
-    body.removeAttribute('class');
-    body.style.setProperty('--background-primary-color', '#ba4949');
-
-    darkModeBtn.style.setProperty('--header-button-color', '#c86d6d');
-    githubBtn.style.setProperty('--header-button-color', '#c86d6d');
-
-    mainTimerMode.classList = ['timer-select-btn active-btn color-transition-time'];
-    shortTimerMode.classList = ['timer-select-btn color-transition-time'];
-    longTimerMode.classList = ['timer-select-btn color-transition-time'];
-
-    timerContainer.style.setProperty('--timer-background-color', "#c15c5c");
-
-    mainTimerMode.style.setProperty('--timer-active-button-color', '#a44e4e');
-
-    startBtn.style.setProperty('--start-btn-text-color', '#ba4949');
-
-    tasksOptionButton.style.setProperty('--tasks-option-btn-color', '#c66a6a');
-
-    addTaskButton.style.setProperty('--add-task-btn-color', '#ab4343');
-
-    timerValue.innerText = '25:00';
-}
-
-function getShortTimerValue(){
-    body.className = 'short-timer-color';
-    body.style.setProperty('--background-primary-color', '#38858a');
-
-    darkModeBtn.style.setProperty('--header-button-color', '#5c9b9f');
-    githubBtn.style.setProperty('--header-button-color', '#5c9b9f');
-
-    shortTimerMode.classList = ['timer-select-btn active-btn color-transition-time'];
-    mainTimerMode.classList = ['timer-select-btn color-transition-time'];
-    longTimerMode.classList = ['timer-select-btn color-transition-time'];
-
-    timerContainer.style.setProperty('--timer-background-color', '#4c9196');
-
-    shortTimerMode.style.setProperty('--timer-active-button-color', '#417b80');
-
-    startBtn.style.setProperty('--start-btn-text-color', '#609da1');
-
-    tasksOptionButton.style.setProperty('--tasks-option-btn-color', '#609da1');
-
-    addTaskButton.style.setProperty('--add-task-btn-color', '#337a7f');
-
-    timerValue.innerText = '05:00';
-}
-
-function getLongTimerValue(){
-    body.className = 'long-timer-color';
-    body.style.setProperty('--background-primary-color', '#397097');
-
-    darkModeBtn.style.setProperty('--header-button-color', '#5d8aaa');
+function getTimerValue(backgroundColor, headerBtnsColor, timerContainerColor, timerMode,
+                        startBtnColor, taskOptionBtnColor, addTaskBtnColor, tempo){
+    globalTimerMode = timerMode;
+    startBtn.innerHTML = '<h1>START</h1>';
     
-    githubBtn.style.setProperty('--header-button-color', '#5d8aaa');
+    if(isTimerActive){
+        clearInterval(timerInterval);
+        isTimerActive = false;
+    }
 
-    longTimerMode.classList = ['timer-select-btn active-btn color-transition-time'];
-    mainTimerMode.classList = ['timer-select-btn color-transition-time'];
-    shortTimerMode.classList = ['timer-select-btn color-transition-time'];
+    body.style.setProperty('--background-primary-color', backgroundColor);
 
-    timerContainer.style.setProperty('--timer-background-color', '#4d7fa2');
+    darkModeBtn.style.setProperty('--header-button-color', headerBtnsColor);
+    githubBtn.style.setProperty('--header-button-color', headerBtnsColor);
+    
+    setActiveMode(timerMode);
 
-    longTimerMode.style.setProperty('--timer-active-button-color', '#426c8a');
+    timerContainer.style.setProperty('--timer-background-color', timerContainerColor);
 
-    startBtn.style.setProperty('--start-btn-text-color', '#397097');
+    setActiveBtnColor(timerMode);
+    
+    startBtn.style.setProperty('--start-btn-text-color', startBtnColor);
 
-    tasksOptionButton.style.setProperty('--tasks-option-btn-color', '#5d8aaa');
+    tasksOptionButton.style.setProperty('--tasks-option-btn-color', taskOptionBtnColor);
 
-    addTaskButton.style.setProperty('--add-task-btn-color', '#34678b');
+    addTaskButton.style.setProperty('--add-task-btn-color', addTaskBtnColor);
 
-    timerValue.innerText = '15:00'
+    timerValue.innerText = tempo;
+}
+
+function setActiveMode(timerMode){
+    switch(timerMode){
+        case 'main': 
+            mainTimerMode.classList = ['timer-select-btn active-btn color-transition-time'];
+            shortTimerMode.classList = ['timer-select-btn color-transition-time'];
+            longTimerMode.classList = ['timer-select-btn color-transition-time'];
+            break;
+        case 'short':
+            shortTimerMode.classList = ['timer-select-btn active-btn color-transition-time'];
+            mainTimerMode.classList = ['timer-select-btn color-transition-time'];
+            longTimerMode.classList = ['timer-select-btn color-transition-time'];
+            break;
+        case 'long' :
+            longTimerMode.classList = ['timer-select-btn active-btn color-transition-time'];
+            mainTimerMode.classList = ['timer-select-btn color-transition-time'];
+            shortTimerMode.classList = ['timer-select-btn color-transition-time'];
+            break;
+        default:
+            mainTimerMode.classList = ['timer-select-btn active-btn color-transition-time'];
+    }
+}
+
+function setActiveBtnColor(timerMode){
+    switch(timerMode){
+        case 'main': 
+            mainTimerMode.style.setProperty('--timer-active-button-color', '#a44e4e');
+            break;
+        case 'short':
+            shortTimerMode.style.setProperty('--timer-active-button-color', '#417b80');
+            break;
+        case 'long' :
+            longTimerMode.style.setProperty('--timer-active-button-color', '#426c8a');
+            break;
+        default:
+            mainTimerMode.style.setProperty('--timer-active-button-color', '#a44e4e');
+    }            
+}
+
+startBtn.addEventListener('click', () =>{
+    if(timerValue.innerText == "00:00"){
+        return;
+    }
+
+    if(isTimerActive){
+        clearInterval(timerInterval);
+        startBtn.innerHTML = '<h1>START</h1>';
+        isTimerActive = !isTimerActive;
+        return; 
+    }
+    
+    isTimerActive = !isTimerActive;
+    startBtn.innerHTML = '<h1>PAUSE</h1>';
+
+    let minutes = timerValue.innerText.split(':')[0];
+    let seconds = timerValue.innerText.split(':')[1];
+
+    if(minutes[0] == '0'){
+        minutes = minutes[1];
+    }
+
+    if(seconds[0] == '0'){
+        seconds = seconds[1];
+    }
+
+    function updateTimerDisplay(){
+        const displayMinutes = minutes < 10 ? '0' + minutes : minutes;
+        const displaySeconds = seconds < 10 ? '0' + seconds : seconds;
+
+        timerValue.innerText = `${displayMinutes}:${displaySeconds}`;
+    }
+
+    function countdown() {
+        if (seconds == 0) {
+            if (minutes == 0) {
+                clearInterval(timerInterval);
+                isTimerActive = false;
+                playAlarm();
+            } else {
+                minutes--;
+                seconds = 59;
+            }
+        } else {
+            seconds--;
+        }
+        updateTimerDisplay();
+    }
+
+    clearInterval(timerInterval);
+    updateTimerDisplay();
+    timerInterval = setInterval(countdown, 1000);
+})
+
+function playAlarm(){
+    let audio;
+    switch(globalTimerMode){
+        case 'main':
+            audio = new Audio('./sounds/mainAlarm.mp3');
+            break;
+        case 'short':
+            audio = new Audio('./sounds/shortAlarm.mp3');
+            break;
+        case 'long':
+            audio = new Audio('./sounds/longAlarm.mp3');
+            break;
+        default:
+            audio = new Audio('./sounds/mainAlarm.mp3');
+    }
+
+    audio.play();
+}
+
+function soundEffect(){
+    if(timerValue.innerText != '00:00'){
+        new Audio('./sounds/timerButton.mp3').play();
+    }
 }

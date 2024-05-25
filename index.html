@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <title>Web Pomodoro</title>
 </head>
-<body onload="getDefaultTimerValue()" id="select-body">
+<body onload="getTimerValue('#ba4949', '#c86d6d', '#c15c5c', 'main', '#ba4949', '#c66a6a', '#ab4343', '25:00')" id="select-body">
     <div class="container">
         <header>
             <div id="titulo">
@@ -24,14 +24,17 @@
 
         <div id="container-timer" class="color-transition-time">
             <div class="timer-select-buttons">
-                <button id="pomodoro" class="timer-select-btn" onclick="getDefaultTimerValue()">Pomodoro</button>
-                <button id="short-break" class="timer-select-btn" onclick="getShortTimerValue()">Short Break</button>
-                <button id="long-break" class="timer-select-btn" onclick="getLongTimerValue()">Long Break</button>
+                <button id="pomodoro" class="timer-select-btn" 
+                onclick="getTimerValue('#ba4949', '#c86d6d', '#c15c5c', 'main', '#ba4949', '#c66a6a', '#ab4343', '25:00')">Pomodoro</button>
+                <button id="short-break" class="timer-select-btn" 
+                onclick="getTimerValue('#38858a', '#5c9b9f', '#4c9196', 'short', '#609da1', '#609da1', '#337a7f', '05:00')">Short Break</button>
+                <button id="long-break" class="timer-select-btn" 
+                onclick="getTimerValue('#397097', '#5d8aaa', '#4d7fa2', 'long', '#397097', '#5d8aaa', '#34678b', '15:00')">Long Break</button>
             </div>
 
             <h1 id="timer"></h1>
 
-            <button id="start-btn" class="text-color-transition-time"><h1>START</h1></button>
+            <button id="start-btn" class="text-color-transition-time" onclick="soundEffect()"><h1>START</h1></button>
         </div>
 
         <div class="container-tasks">
