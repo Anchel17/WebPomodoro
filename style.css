@@ -122,6 +122,16 @@ header{
     box-shadow: #ddd 0 6px 0;
 }
 
+.active-start-btn{
+    margin-top: 3.2rem!important;
+    margin-bottom: 2.4rem!important;
+    box-shadow: none!important;
+}
+
+.active-start-btn h1{
+    padding-top: 6px;
+}
+
 .container-tasks{
     display: flex;
     flex-direction: column;

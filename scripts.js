@@ -90,12 +90,14 @@ startBtn.addEventListener('click', () =>{
     if(isTimerActive){
         clearInterval(timerInterval);
         startBtn.innerHTML = '<h1>START</h1>';
+        startBtn.classList = ['text-color-transition-time'];
         isTimerActive = !isTimerActive;
         return; 
     }
     
     isTimerActive = !isTimerActive;
     startBtn.innerHTML = '<h1>PAUSE</h1>';
+    startBtn.classList = ['text-color-transition-time active-start-btn'];
 
     let minutes = timerValue.innerText.split(':')[0];
     let seconds = timerValue.innerText.split(':')[1];
