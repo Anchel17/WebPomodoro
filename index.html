@@ -55,8 +55,28 @@
                 <p>Add Task</p>
             </button>
         </div>
-    </div>
 
+        <div id="modal-background">
+            <div id="modal">
+                <form id="form">
+                    <div id="form-container">
+                        <div id="form-inputs-container">
+                            <h2>Title</h2>
+                            <input type="text" id="modal-title" name="title" maxlength="40" required>
+                            <h3>Note</h3>
+                            <input type="text" id="modal-note" name="note" maxlength="50"></textarea>
+                        </div>
+                        <div class="modal-buttons">
+                            <button id="cancel-button">Cancel</button>
+                            <button type="submit" id="submit-button">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
     <script src="./scripts.js"></script>
+    <script src="./Task.js"></script>
 </body>
 </html>

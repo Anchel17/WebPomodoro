@@ -12,6 +12,7 @@ var addTaskButton = document.getElementById('add-task-btn');
 var timerInterval;
 var isTimerActive = false;
 var globalTimerMode;
+var taskList = [];
 
 
 function getTimerValue(backgroundColor, headerBtnsColor, timerContainerColor, timerMode,
@@ -138,6 +139,29 @@ startBtn.addEventListener('click', () =>{
     timerInterval = setInterval(countdown, 1000);
 })
 
+document.getElementById('form').addEventListener('submit', function(){
+    event.preventDefault();
+    
+    const title = document.getElementById('modal-title').value;
+    const note = document.getElementById('modal-note').value;
+
+    if (title.trim() === '') {
+        alert('Title is required!');
+        return;
+    }
+
+    saveTask(title, note);
+    document.getElementById('modal-background').style.display = 'none';
+})
+
+document.getElementById('cancel-button').addEventListener('click', function(){
+    document.getElementById('modal-background').style.display = 'none';
+})
+
+addTaskButton.addEventListener('click', function(){
+    document.getElementById('modal-background').style.display = 'flex';
+})
+
 function playAlarm(){
     let audio;
     switch(globalTimerMode){
@@ -161,4 +185,10 @@ function soundEffect(){
     if(timerValue.innerText != '00:00'){
         new Audio('./sounds/timerButton.mp3').play();
     }
+}
+
+function saveTask(title, note){
+    const task = new Task(title, note);
+
+    taskList.push(task);
 }
