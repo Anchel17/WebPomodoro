@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <title>Web Pomodoro</title>
 </head>
-<body onload="getTimerValue('#ba4949', '#c86d6d', '#c15c5c', 'main', '#ba4949', '#c66a6a', '#ab4343', '25:00')" id="select-body">
+<body onload="initApp()" id="select-body">
     <div class="container">
         <header>
             <div id="titulo">
@@ -49,11 +49,26 @@
                 <h2>Tasks</h2>
                 <img id="task-list-options" class="color-transition-time" src="./img/dots.svg" alt="options">
             </div>
-
             <button id="add-task-btn" class="color-transition-time">
                 <img src="./img/add-task.svg" alt="Add task">
                 <p>Add Task</p>
             </button>
+
+            <div id="task-list">
+                <div class="task">
+                    <div class="task-status">
+                        <div class="task-check-title">
+                            <img src="./img/check.svg" alt="check task">
+                            <h2 class="title-task-from-list">Teste</h2>
+                        </div>
+                        <img src="./img/edit.svg" alt="edit task" class="edit-task">
+                    </div>
+                    <div class="task-note">
+                        <p class="note-task-from-list">Lorem ipsum dolor sit amet consectetur</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <div id="modal-background">

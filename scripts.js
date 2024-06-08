@@ -9,11 +9,17 @@ var githubBtn = document.getElementById('github');
 var startBtn = document.getElementById('start-btn');
 var tasksOptionButton = document.getElementById('task-list-options');
 var addTaskButton = document.getElementById('add-task-btn');
+var taskListElement = document.getElementById('task-list')
 var timerInterval;
 var isTimerActive = false;
 var globalTimerMode;
 var taskList = [];
 
+
+function initApp(){
+    getTimerValue('#ba4949', '#c86d6d', '#c15c5c', 'main', '#ba4949', '#c66a6a', '#ab4343', '25:00');
+    loadTaskList();
+}
 
 function getTimerValue(backgroundColor, headerBtnsColor, timerContainerColor, timerMode,
                         startBtnColor, taskOptionBtnColor, addTaskBtnColor, tempo){
@@ -43,6 +49,18 @@ function getTimerValue(backgroundColor, headerBtnsColor, timerContainerColor, ti
     addTaskButton.style.setProperty('--add-task-btn-color', addTaskBtnColor);
 
     timerValue.innerText = tempo;
+}
+
+function loadTaskList(){
+    if(taskList.length == 0){
+        return;
+    }
+
+    taskListElement.style.display = 'flex';
+
+    taskList.forEach(t => {
+        console.log(t);
+    })
 }
 
 function setActiveMode(timerMode){

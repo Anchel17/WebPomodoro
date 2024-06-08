@@ -279,3 +279,61 @@ form h3{
     color: #ffffff;
     border: none;
 }
+
+/* TASKS */
+
+#task-list{
+    width:100%;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    display: none;
+    flex-direction: column;
+}
+
+.task{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    widtH: 100%;
+    background-color: #ffffff;
+    border-left: 8px solid black;
+    border-radius: 8px;
+}
+
+.task img{
+    width: 2vw;
+}
+
+.task-status{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: .5rem;
+    padding-left: 1rem;
+}
+
+.task-check-title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .5rem;
+}
+
+.task-note{
+    background-color: #fff6c4;
+    width: 90%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    margin-top: 1rem;
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+}
+
+.edit-task{
+    padding-right: 1rem;
+}
+
+.edit-task:hover{
+    cursor: pointer;
+}
