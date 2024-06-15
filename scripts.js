@@ -14,6 +14,8 @@ var timerInterval;
 var isTimerActive = false;
 var globalTimerMode;
 var taskList = [];
+var isEditMode = false;
+var editedTaskId;
 
 
 function initApp(){
@@ -55,11 +57,24 @@ function loadTaskList(){
     if(taskList.length == 0){
         return;
     }
-
+    taskListElement.innerHTML = '';
     taskListElement.style.display = 'flex';
 
     taskList.forEach(t => {
-        console.log(t);
+        taskListElement.innerHTML += 
+                `    
+            <div class="task">
+                <div class="task-status">
+                    <div class="task-check-title">
+                        <img src="./img/check.svg" alt="check task">
+                        <h2 class="title-task-from-list">${t.title}</h2>
+                    </div>
+                    <img src="./img/edit.svg" alt="edit task" class="edit-task" onclick="openEditModal(${t.id})">
+                </div>
+                <div class="task-note">
+                    <p class="note-task-from-list">${t.note}</p>
+                </div>
+            </div>`
     })
 }
 
@@ -162,9 +177,22 @@ document.getElementById('form').addEventListener('submit', function(){
     
     const title = document.getElementById('modal-title').value;
     const note = document.getElementById('modal-note').value;
-
+    
     if (title.trim() === '') {
         alert('Title is required!');
+        return;
+    }
+    
+    if(isEditMode){
+        taskList.forEach(t => {
+            if(t.id == editedTaskId){
+                t.title = title;
+                t.note = note;
+            }
+        });
+        isEditMode = false;
+        loadTaskList();
+        document.getElementById('modal-background').style.display = 'none';
         return;
     }
 
@@ -206,7 +234,38 @@ function soundEffect(){
 }
 
 function saveTask(title, note){
-    const task = new Task(title, note);
+    const task = new Task(taskList.length + 1, title, note);
 
     taskList.push(task);
+
+    taskListElement.style.display = 'flex';
+
+    taskListElement.innerHTML += 
+                `    
+            <div class="task">
+                <div class="task-status">
+                    <div class="task-check-title">
+                        <img src="./img/check.svg" alt="check task">
+                        <h2 class="title-task-from-list">${task.title}</h2>
+                    </div>
+                    <img src="./img/edit.svg" alt="edit task" class="edit-task" onclick="openEditModal(${task.id})">
+                </div>
+                <div class="task-note">
+                    <p class="note-task-from-list">${task.note}</p>
+                </div>
+            </div>
+            `
+}
+
+function openEditModal(taskId){
+    isEditMode = true;
+    document.getElementById('modal-background').style.display = 'flex';
+
+    let task = taskList.find(t => t.id == taskId);
+    console.log(task)
+
+    document.getElementById('modal-title').value = task.title;
+    document.getElementById('modal-note').value = task.note;
+
+    editedTaskId = taskId;
 }

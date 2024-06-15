@@ -298,6 +298,7 @@ form h3{
     background-color: #ffffff;
     border-left: 8px solid black;
     border-radius: 8px;
+    margin: 0 0 1rem 0;
 }
 
 .task img{
