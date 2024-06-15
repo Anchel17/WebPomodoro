@@ -9,7 +9,9 @@ var githubBtn = document.getElementById('github');
 var startBtn = document.getElementById('start-btn');
 var tasksOptionButton = document.getElementById('task-list-options');
 var addTaskButton = document.getElementById('add-task-btn');
-var taskListElement = document.getElementById('task-list')
+var taskListElement = document.getElementById('task-list');
+var activeTaskNumber = document.getElementById('task-number');
+var activeTaskTitle = document.getElementById('task-title');
 var timerInterval;
 var isTimerActive = false;
 var globalTimerMode;
@@ -21,6 +23,7 @@ var editedTaskId;
 function initApp(){
     getTimerValue('#ba4949', '#c86d6d', '#c15c5c', 'main', '#ba4949', '#c66a6a', '#ab4343', '25:00');
     loadTaskList();
+    getActiveTaskInfos();
 }
 
 function getTimerValue(backgroundColor, headerBtnsColor, timerContainerColor, timerMode,
@@ -55,27 +58,33 @@ function getTimerValue(backgroundColor, headerBtnsColor, timerContainerColor, ti
 
 function loadTaskList(){
     if(taskList.length == 0){
+        taskListElement.innerHTML = '';
         return;
     }
     taskListElement.innerHTML = '';
     taskListElement.style.display = 'flex';
-
+    
     taskList.forEach(t => {
         taskListElement.innerHTML += 
-                `    
-            <div class="task">
-                <div class="task-status">
-                    <div class="task-check-title">
-                        <img src="./img/check.svg" alt="check task">
-                        <h2 class="title-task-from-list">${t.title}</h2>
-                    </div>
-                    <img src="./img/edit.svg" alt="edit task" class="edit-task" onclick="openEditModal(${t.id})">
+        `    
+        <div class="task ${getIsActiveClass(t.id)}" onclick="setTaskActive(${t.id})">
+            <div class="task-status">
+                <div class="task-check-title">
+                    <img src="./img/check.svg" alt="check task">
+                    <h2 class="title-task-from-list">${t.title}</h2>
                 </div>
-                <div class="task-note">
-                    <p class="note-task-from-list">${t.note}</p>
+                <div class="update-delete-container">
+                    <img src="./img/edit.svg" alt="edit task" class="edit-task" onclick="event.stopPropagation(); openEditModal(${t.id})">
+                    <img src="./img/trash.svg" alt="delete task" class="delete-task" onclick="event.stopPropagation(); deleteTask(${t.id})">
                 </div>
-            </div>`
-    })
+            </div>
+            <div class="task-note">
+                <p class="note-task-from-list">${t.note}</p>
+            </div>
+        </div>`
+    });
+
+    getActiveTaskInfos();
 }
 
 function setActiveMode(timerMode){
@@ -235,26 +244,33 @@ function soundEffect(){
 
 function saveTask(title, note){
     const task = new Task(taskList.length + 1, title, note);
+    if(taskList.length == 0){
+        task.isActive = true;
+    }
 
     taskList.push(task);
 
     taskListElement.style.display = 'flex';
 
     taskListElement.innerHTML += 
-                `    
-            <div class="task">
+            `    
+            <div class="task ${getIsActiveClass(task.id)}" onclick="setTaskActive(${task.id})">
                 <div class="task-status">
                     <div class="task-check-title">
                         <img src="./img/check.svg" alt="check task">
                         <h2 class="title-task-from-list">${task.title}</h2>
                     </div>
-                    <img src="./img/edit.svg" alt="edit task" class="edit-task" onclick="openEditModal(${task.id})">
+                    <div class="update-delete-container">
+                        <img src="./img/edit.svg" alt="edit task" class="edit-task" onclick="event.stopPropagation(); openEditModal(${task.id})">
+                        <img src="./img/trash.svg" alt="delete task" class="delete-task" onclick="event.stopPropagation(); deleteTask(${task.id})">
+                    </div>
                 </div>
                 <div class="task-note">
                     <p class="note-task-from-list">${task.note}</p>
                 </div>
             </div>
             `
+    getActiveTaskInfos();
 }
 
 function openEditModal(taskId){
@@ -262,10 +278,78 @@ function openEditModal(taskId){
     document.getElementById('modal-background').style.display = 'flex';
 
     let task = taskList.find(t => t.id == taskId);
-    console.log(task)
 
     document.getElementById('modal-title').value = task.title;
     document.getElementById('modal-note').value = task.note;
 
     editedTaskId = taskId;
+}
+
+function getIsActiveClass(taskId){
+    let task = taskList.find(t => t.id == taskId);
+
+    return task.isActive ? 'active-task' : '';
+}
+
+function getActiveTaskInfos(){
+    if(taskList.length == 0){
+        activeTaskNumber.innerText = '#1';
+        activeTaskTitle.innerText = 'Time to focus!';
+        return;
+    }
+    
+    let activeTask = taskList.find(t => t.isActive == true);
+    
+    activeTaskNumber.innerText = '#' + activeTask.id;
+    activeTaskTitle.innerText = activeTask.title;
+}
+
+function setTaskActive(taskId){
+    taskList.forEach(t => {
+        if(t.isActive && t.id != taskId){
+            t.isActive = false;
+        }
+
+        if(t.id == taskId){
+            if(t.isActive){
+                return;
+            }
+
+            t.isActive = true;
+        }
+    });
+
+    reordenarTaskList(taskId);
+    loadTaskList();
+}
+
+function reordenarTaskList(taskId){
+    const activeTask = taskList.find(t => t.id == taskId);
+
+    let reordenedTasks = [];
+    reordenedTasks.push(activeTask);
+
+    taskList.forEach(t => {
+        if(t.id != activeTask.id){
+            reordenedTasks.push(t);
+        }
+    });
+
+    taskList = reordenedTasks;
+}
+
+function deleteTask(taskId){
+    const taskToDelete = taskList.find(t => t.id == taskId);
+
+    let newTasksArray = [];
+
+    taskList.forEach(t => {
+        if(t.id != taskToDelete.id){
+            newTasksArray.push(t);
+        }
+    });
+
+    taskList = newTasksArray;
+
+    taskList.length > 0 ? setTaskActive(taskList[0].id) : loadTaskList();
 }

@@ -296,9 +296,12 @@ form h3{
     flex-direction: column;
     widtH: 100%;
     background-color: #ffffff;
-    border-left: 8px solid black;
     border-radius: 8px;
     margin: 0 0 1rem 0;
+}
+
+.active-task{
+    border-left: 8px solid #000000;
 }
 
 .task img{
@@ -332,9 +335,13 @@ form h3{
 }
 
 .edit-task{
+    margin-right: .5rem;
+}
+
+.delete-task{
     padding-right: 1rem;
 }
 
-.edit-task:hover{
+.edit-task,.delete-task:hover{
     cursor: pointer;
 }

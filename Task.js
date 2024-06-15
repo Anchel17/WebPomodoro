@@ -4,5 +4,6 @@ class Task{
         this.title = title;
         this.note = note;
         this.isDone = false;
+        this.isActive = false;
     }
 }
