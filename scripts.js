@@ -70,7 +70,7 @@ function loadTaskList(){
         <div class="task ${getIsActiveClass(t.id)}" onclick="setTaskActive(${t.id})">
             <div class="task-status">
                 <div class="task-check-title">
-                    <img src="./img/check.svg" alt="check task">
+                    ${getTaskStatus(t.id)}
                     <h2 class="title-task-from-list">${t.title}</h2>
                 </div>
                 <div class="update-delete-container">
@@ -257,7 +257,7 @@ function saveTask(title, note){
             <div class="task ${getIsActiveClass(task.id)}" onclick="setTaskActive(${task.id})">
                 <div class="task-status">
                     <div class="task-check-title">
-                        <img src="./img/check.svg" alt="check task">
+                        ${getTaskStatus(task.id)}
                         <h2 class="title-task-from-list">${task.title}</h2>
                     </div>
                     <div class="update-delete-container">
@@ -352,4 +352,24 @@ function deleteTask(taskId){
     taskList = newTasksArray;
 
     taskList.length > 0 ? setTaskActive(taskList[0].id) : loadTaskList();
+}
+
+function checkTask(taskId){
+     taskList.forEach(t => {
+        if(t.id == taskId){
+            t.isDone = !t.isDone;
+            return;
+        }
+    });
+    
+    loadTaskList();
+}
+
+function getTaskStatus(taskId){
+    const task = taskList.find(t => t.id == taskId);
+
+    return task.isDone ? `<img src="./img/checked.svg" alt="check task" class="is-task-done" onclick="event.stopPropagation(); checkTask(${taskId})">`
+                         : 
+                        `<img src="./img/check.svg" alt="check task" class="is-task-done" onclick="event.stopPropagation(); checkTask(${taskId})">`;
+
 }

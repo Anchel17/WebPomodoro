@@ -345,3 +345,7 @@ form h3{
 .edit-task,.delete-task:hover{
     cursor: pointer;
 }
+
+.is-task-done:hover{
+    cursor: pointer;
+}
