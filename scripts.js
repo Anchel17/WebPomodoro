@@ -18,6 +18,7 @@ var globalTimerMode;
 var taskList = [];
 var isEditMode = false;
 var editedTaskId;
+var darkMode = false;
 
 
 function initApp(){
@@ -36,6 +37,24 @@ function getTimerValue(backgroundColor, headerBtnsColor, timerContainerColor, ti
         isTimerActive = false;
     }
 
+    if(darkMode){
+        switch(timerMode){
+            case 'main':
+                getDarkTimerValue('#240d33', '#4c2863', '#3a1f4b', 'main', '#3a1f4b', '#2c0d40', '#401a58', '25:00');
+            break;
+            case 'short':
+                getDarkTimerValue('#141f36', '#283b62', '#213255', 'short', '#213255', '#213255', '#1e3156', '05:00');
+            break;
+            case 'long':
+                getDarkTimerValue('#0c2c2c', '#244e4e', '#174242', 'long', '#174242', '#244e4e', '#1c4a4a', '15:00');
+            break;
+        }
+
+        return;
+    }
+
+    darkModeBtn.innerHTML = '<img src="./img/sun.svg" alt="Sol" class="color-transition-time">';
+
     body.style.setProperty('--background-primary-color', backgroundColor);
 
     darkModeBtn.style.setProperty('--header-button-color', headerBtnsColor);
@@ -46,6 +65,36 @@ function getTimerValue(backgroundColor, headerBtnsColor, timerContainerColor, ti
     timerContainer.style.setProperty('--timer-background-color', timerContainerColor);
 
     setActiveBtnColor(timerMode);
+    
+    startBtn.style.setProperty('--start-btn-text-color', startBtnColor);
+
+    tasksOptionButton.style.setProperty('--tasks-option-btn-color', taskOptionBtnColor);
+
+    addTaskButton.style.setProperty('--add-task-btn-color', addTaskBtnColor);
+
+    timerValue.innerText = tempo;
+}
+
+function getDarkTimerValue(backgroundColor, headerBtnsColor, timerContainerColor, timerMode,
+                        startBtnColor, taskOptionBtnColor, addTaskBtnColor, tempo){
+    globalTimerMode = timerMode;
+    startBtn.innerHTML = '<h1>START</h1>';
+    
+    if(isTimerActive){
+        clearInterval(timerInterval);
+        isTimerActive = false;
+    }
+
+    body.style.setProperty('--background-primary-color', backgroundColor);
+
+    darkModeBtn.style.setProperty('--header-button-color', headerBtnsColor);
+    githubBtn.style.setProperty('--header-button-color', headerBtnsColor);
+    
+    setActiveMode(timerMode);
+
+    timerContainer.style.setProperty('--timer-background-color', timerContainerColor);
+
+    setActiveBtnDarkColor(timerMode);
     
     startBtn.style.setProperty('--start-btn-text-color', startBtnColor);
 
@@ -122,6 +171,22 @@ function setActiveBtnColor(timerMode){
             break;
         default:
             mainTimerMode.style.setProperty('--timer-active-button-color', '#a44e4e');
+    }            
+}
+
+function setActiveBtnDarkColor(timerMode){
+    switch(timerMode){
+        case 'main': 
+            mainTimerMode.style.setProperty('--timer-active-button-color', '#2c0d40');
+            break;
+        case 'short':
+            shortTimerMode.style.setProperty('--timer-active-button-color', '#101f3e');
+            break;
+        case 'long' :
+            longTimerMode.style.setProperty('--timer-active-button-color', '#092c2c');
+            break;
+        default:
+            mainTimerMode.style.setProperty('--timer-active-button-color', '#2c0d40');
     }            
 }
 
@@ -373,3 +438,16 @@ function getTaskStatus(taskId){
                         `<img src="./img/check.svg" alt="check task" class="is-task-done" onclick="event.stopPropagation(); checkTask(${taskId})">`;
 
 }
+
+darkModeBtn.addEventListener('click', () => {
+    darkMode = !darkMode;
+    
+    if(darkMode){
+        getDarkTimerValue('#240d33', '#4c2863', '#3a1f4b', 'main', '#3a1f4b', '#2c0d40', '#401a58', '25:00')
+        darkModeBtn.innerHTML = '<img src="./img/moon.svg" alt="Sol" class="color-transition-time">';
+    }
+    else{
+        getTimerValue('#ba4949', '#c86d6d', '#c15c5c', 'main', '#ba4949', '#c66a6a', '#ab4343', '25:00');
+        darkModeBtn.innerHTML = '<img src="./img/sun.svg" alt="Lua" class="color-transition-time">';
+    }           
+});
