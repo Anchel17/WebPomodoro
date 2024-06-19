@@ -304,6 +304,10 @@ form h3{
     border-left: 8px solid #000000;
 }
 
+.active-task-dark-mode{
+    border-left: 8px solid #7faeff;
+}
+
 .task img{
     width: 2vw;
 }

@@ -19,6 +19,7 @@ var taskList = [];
 var isEditMode = false;
 var editedTaskId;
 var darkMode = false;
+var idAtual = 1;
 
 
 function initApp(){
@@ -308,7 +309,7 @@ function soundEffect(){
 }
 
 function saveTask(title, note){
-    const task = new Task(taskList.length + 1, title, note);
+    const task = new Task(idAtual++, title, note);
     if(taskList.length == 0){
         task.isActive = true;
     }
@@ -352,6 +353,10 @@ function openEditModal(taskId){
 
 function getIsActiveClass(taskId){
     let task = taskList.find(t => t.id == taskId);
+
+    if(darkMode){
+        return task.isActive ? 'active-task-dark-mode' : '';
+    }
 
     return task.isActive ? 'active-task' : '';
 }
